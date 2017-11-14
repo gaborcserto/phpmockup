@@ -3,7 +3,11 @@ define('__ROOT__', getcwd());
 
 require_once (__ROOT__.'/classes/file-upload.class.php');
 
+if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
+    //die('Sorry Request must be Ajax POST'); //exit script
+}
+
 //file upload
-if($_POST) {
-    new fileUpload($_POST);
+if(isset($_GET['upload'])) {
+    new fileUpload($_POST, $_FILES);
 }

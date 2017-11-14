@@ -2,38 +2,36 @@
 
 class fileUpload {
 
-    public $uploadDirectory = '../images/';
+    public $uploadDirectory = './images/';
     public $errors = [];
+    public $fileExtension;
     public $fileExtensions = ['jpeg', 'jpg', 'png', 'gif'];
     public $fileData;
-    public $fileName;
-    public $fileSize;
-    public $fileTmpName;
-    public $fileType;
-    public $fileExtension;
+    public $fileName = '';
+    public $fileSize = '';
+    public $fileTmpName = '';
+    public $fileType = '';
     public $data = [];
     public $uploadPath = '';
 
-    public function __construct($postData) {
-        echo $this->init($postData);
+    public function __construct($postData, $postImage) {
+        echo $this->init($postData, $postImage);
     }
 
 
-    private function init($postData) {
+    private function init($postData, $postImage) {
 
-        print_r($postData);
+        $this->fileName = $postImage['image']['name'];
+        $this->fileSize = $postImage['image']['size'];
+        $this->fileTmpName  = $postImage['image']['tmp_name'];
+        $this->fileType = $postImage['image']['type'];
+        
+        $tmp = explode('.',  $this->fileName);
+        $this->fileExtension = strtolower(end($tmp));
 
-
-        $this->fileData = $this->fileCheck($postData['image']);
-
-        $this->fileName = $fileData['name'];
-        $this->fileSize = $fileData['size'];
-        $this->fileTmpName  = $fileData['tmp_name'];
-        $this->fileType = $this->$fileData['type'];
-        $this->fileExtension = strtolower(end(explode('.', $this->fileName)));
         $this->uploadPath = $this->uploadDirectory . basename($this->fileName);
 
-        $this->formCheck($postData);
+        return $this->formCheck($postData);
 
     }
 
@@ -51,7 +49,7 @@ class fileUpload {
             $this->errors['image'] = "This file extension is not allowed. Please upload a JPEG or PNG file";
         }
 
-        if ($fileSize > 2000000) {
+        if ($this->fileSize > 2000000) {
             $this->errors['image'] = "This file is more than 2MB. Sorry, it has to be less than or equal to 2MB";
         }
 
@@ -60,13 +58,13 @@ class fileUpload {
             $data['errors']  = $errors;
         } else {
 
-            $data = $this->fileUpload;
+            $data = $this->fileUploader();
         }
 
         return json_encode($data);
     }
 
-    private function fileUpload () {
+    private function fileUploader() {
 
         $this->dirCheck($this->uploadDirectory);
 
@@ -86,15 +84,6 @@ class fileUpload {
     private function dirCheck($directoryName) {
         if( ! is_dir($directoryName)) {
             mkdir($directoryName, 0775);
-        }
-    }
-
-    private function fileCheck($image) {
-        if(is_file($image)) {
-            $fileData['size'] = filesize($image);
-            $fileData['name'] = $image;
-
-            return $fileData;
         }
     }
 }
