@@ -1,0 +1,15 @@
+// Importing Variables
+@import "_variables/variables";
+
+// Importing mixins
+@import "_mixins/mixins";
+
+// Importing vendors
+@import "_vendors/font-awesome/scss/font-awesome";
+
+// Importing common settings
+@import "common";
+
+// Importing Layout Elements
+@import "file-upload";
+@import "gallery";
