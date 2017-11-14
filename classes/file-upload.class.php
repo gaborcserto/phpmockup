@@ -5,6 +5,7 @@ class fileUpload {
     public $uploadDirectory = '../images/';
     public $errors = [];
     public $fileExtensions = ['jpeg', 'jpg', 'png', 'gif'];
+    public $fileData;
     public $fileName;
     public $fileSize;
     public $fileTmpName;
@@ -17,26 +18,33 @@ class fileUpload {
         echo $this->init($postData);
     }
 
-    private function init ($postData) {
-        $this->fileName = $postData['image']['name'];
-        $this->fileSize = $postData['image']['size'];
-        $this->fileTmpName  = $postData['image']['tmp_name'];
-        $this->fileType = $postData['image']['type'];
+
+    private function init($postData) {
+
+        print_r($postData);
+
+
+        $this->fileData = $this->fileCheck($postData['image']);
+
+        $this->fileName = $fileData['name'];
+        $this->fileSize = $fileData['size'];
+        $this->fileTmpName  = $fileData['tmp_name'];
+        $this->fileType = $this->$fileData['type'];
         $this->fileExtension = strtolower(end(explode('.', $this->fileName)));
         $this->uploadPath = $this->uploadDirectory . basename($this->fileName);
 
-        $this->fileCheck($postData);
+        $this->formCheck($postData);
 
     }
 
-    private function fileCheck ($postData) {
+    private function formCheck ($postData) {
 
-        if (empty($postData['name'])) {
-            $errors['name'] = 'Name is required.';
+        if (empty($postData['title'])) {
+            $errors['title'] = 'Title is required.';
         }
 
-        if (empty($postData['email'])) {
-            $errors['email'] = 'Email is required.';
+        if (empty($postData['description'])) {
+            $errors['description'] = 'Description is required.';
         }
 
         if ( ! in_array($this->fileExtension, $this->fileExtensions)) {
@@ -55,12 +63,12 @@ class fileUpload {
             $data = $this->fileUpload;
         }
 
-        echo json_encode($data);
+        return json_encode($data);
     }
 
     private function fileUpload () {
 
-        $this->checkDir($this->uploadDirectory);
+        $this->dirCheck($this->uploadDirectory);
 
         $fileUpload = move_uploaded_file($this->fileTmpName, $this->uploadPath);
 
@@ -75,9 +83,18 @@ class fileUpload {
         return $data;
     }
 
-    private function checkDir($directoryName) {
+    private function dirCheck($directoryName) {
         if( ! is_dir($directoryName)) {
             mkdir($directoryName, 0775);
+        }
+    }
+
+    private function fileCheck($image) {
+        if(is_file($image)) {
+            $fileData['size'] = filesize($image);
+            $fileData['name'] = $image;
+
+            return $fileData;
         }
     }
 }

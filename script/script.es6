@@ -9,17 +9,20 @@ function formSubmit (form) {
 	$(form).on('submit', (event)=> {
 
 		let formData = {
-			'name'     : $('input[name=name]').val(),
-			'email'    : $('input[name=email]').val(),
-			'image'    : $('input[name=image]').val()
-		},
-			titleGroup = '#title-group',
-			descriptionGroup = '#description-group',
-			imageGroup = '#image-group',
-			formGroup = '#form';
+				'title'			: $('input[name=title]').val(),
+				'description'	: $('input[name=description]').val(),
+				'image'			: $('input[name=image]').val()
+			},
+			titleGroup 			= '#title-group',
+			descriptionGroup 	= '#description-group',
+			imageGroup 			= '#image-group',
+			formGroup 			= '#form';
 
 
 		$(formGroup).removeClass('has-error');
+
+		// eslint-disable-next-line no-console
+		console.log(formData);
 
 		$.ajax({
 			type        : 'POST',
@@ -30,13 +33,13 @@ function formSubmit (form) {
 		})
 			.done((data) => {
 				// eslint-disable-next-line no-console
-				console.log(data);
+				//console.log(data);
 
 				$(formGroup).append('<div class="alert alert-success">' + data.message + '</div>');
 			})
 			.fail((data) =>{
 				// eslint-disable-next-line no-console
-				console.log(data);
+				//console.log(data);
 
 				if (data.errors.title) {
 					$(titleGroup).addClass('has-error');
