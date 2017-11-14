@@ -18,11 +18,11 @@
         <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand">
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">File upload</a>
+                    <li class="nav-item form-link active">
+                        <a id="form" class="nav-link" href="#">File upload</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Gallery</a>
+                    <li class="nav-item images-link">
+                        <a id="images" class="nav-link" href="#">Gallery</a>
                     </li>
                 </ul>
             </div>
@@ -33,7 +33,7 @@
         <section class="row justify-content-center file-upload" id="file-upload">
             <div class="col-6 file-upload__wrapper">
                 <h2>File upload</h2>
-                <form enctype="multipart/form-data" action="ajax.php?upload" c name="uploadForm" method="post" class="file-upload__form" id="form">
+                <form enctype="multipart/form-data" action="ajax.php?upload" name="uploadForm" method="post" class="file-upload__form" id="upload-form">
 
                     <div class="form-group" id="title-group">
                         <label for="title">Title</label>
