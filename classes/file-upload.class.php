@@ -1,4 +1,9 @@
 <?php
+// Prevent direct access to this file
+if ( ! defined('ABSPATH' ) ) {
+	header( 'HTTP/1.1 403 Forbidden' );
+	die( 'Please do not load this file directly. Thank you.' );
+}
 
 class fileUpload {
 

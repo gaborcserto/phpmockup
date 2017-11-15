@@ -6,19 +6,19 @@ $(document).ready(() => {
 });
 
 function pageLoad() {
-	let formLink = $('.form-link');
-	let imageLink = $('.image-link');
+	let formLink = '.form-link';
+	let imageLink = '.images-link';
 	let main = $('main');
 
 	main.html(main.load('form.tpl'));
 	$('#form').on('click',() =>{
-		formLink.addClass('active');
-		imageLink.removeClass('active');
+		$(formLink).addClass('active');
+		$(imageLink).removeClass('active');
 		main.html(main.load('form.tpl'));
 	});
 	$('#images').on('click',() =>{
-		imageLink.addClass('active');
-		formLink.removeClass('active');
+		$(imageLink).addClass('active');
+		$(formLink).removeClass('active');
 		main.html(main.load('images.tpl'));
 	});
 }
