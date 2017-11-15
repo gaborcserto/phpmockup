@@ -1,16 +1,19 @@
 import {$} from './lib/jquery.es6';
 
 $(document).ready(() => {
-	pageLoad();
+	//pageLoad();
 	formSubmit($('#upload-form'));
 });
 
-function pageLoad() {
+/*function pageLoad() {
 	let formLink = '.form-link';
 	let imageLink = '.images-link';
 	let main = $('main');
 
+	$(formLink).addClass('active');
+	$(imageLink).removeClass('active');
 	main.html(main.load('form.tpl'));
+
 	$('#form').on('click',() =>{
 		$(formLink).addClass('active');
 		$(imageLink).removeClass('active');
@@ -21,7 +24,7 @@ function pageLoad() {
 		$(formLink).removeClass('active');
 		main.html(main.load('images.tpl'));
 	});
-}
+}*/
 
 function formSubmit (formId) {
 

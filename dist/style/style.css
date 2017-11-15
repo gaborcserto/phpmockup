@@ -3112,6 +3112,12 @@ section {
   display: none;
 }
 
+.file-upload .alert {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: .25 1.25rem;
+}
+
 .gallery {
   padding: 15px;
 }

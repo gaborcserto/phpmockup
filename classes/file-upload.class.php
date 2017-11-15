@@ -1,9 +1,7 @@
 <?php
-// Prevent direct access to this file
-if ( ! defined('ABSPATH' ) ) {
-	header( 'HTTP/1.1 403 Forbidden' );
-	die( 'Please do not load this file directly. Thank you.' );
-}
+
+//include_once ('json-creator.class.php');
+require_once ('vendor/MysqliDb.php');
 
 class fileUpload {
 
@@ -19,12 +17,19 @@ class fileUpload {
     public $data = [];
     public $uploadPath = '';
 
+    //private $jsonCreator;
+
+    private $db;
+
     public function __construct($postData, $postImage) {
         echo $this->init($postData, $postImage);
     }
 
 
     private function init($postData, $postImage) {
+
+        //$this->jsonCreator = new jsonCreator();
+        $this->db = new MysqliDb ('localhost', 'root', '', 'upload_image');
 
         $this->fileName = $postImage['image']['name'];
         $this->fileSize = $postImage['image']['size'];
@@ -34,7 +39,8 @@ class fileUpload {
         $tmp = explode('.',  $this->fileName);
         $this->fileExtension = strtolower(end($tmp));
 
-        $this->uploadPath = $this->uploadDirectory . basename($this->fileName);
+        $newName = '' . $this->checkId() . '.' . $this->fileExtension . '';
+        $this->uploadPath = $this->uploadDirectory . basename($newName);
 
         return $this->formCheck($postData);
 
@@ -64,6 +70,24 @@ class fileUpload {
         } else {
 
             $data = $this->fileUploader();
+
+            if($data['success'] == true) {
+
+                //$jsonData['id'] = $this->checkId();
+                //$jsonData['title'] = $postData['title'];
+                //$jsonData['description'] = $postData['description'];
+                //$jsonData['url'] = $this->uploadPath;  
+
+                $data = Array (
+                    "title" => $postData['title'],
+                    "description" => $postData['description'],
+                    "url" => $this->uploadPath
+                );
+
+                $this->db->insert ('gallery', $data);
+
+                //$this->jsonCreator->init($jsonData);
+            }
         }
 
         return json_encode($data);
@@ -80,7 +104,7 @@ class fileUpload {
             $data['message'] = "The file " . basename($this->fileName) . " has been uploaded";
         } else {
             $data['success'] = false;
-            $data['errors']['form']  = "An error occurred somewhere. Try again or contact the admin";
+            $data['errors']['image']  = "An error occurred somewhere. Try again or contact the admin";
         }
 
         return $data;
@@ -89,6 +113,18 @@ class fileUpload {
     private function dirCheck($directoryName) {
         if( ! is_dir($directoryName)) {
             mkdir($directoryName, 0775);
+        }
+    }
+
+    private function checkId() {
+        $gallery = $this->db->get ("gallery");
+        $max = $this->db->count;
+        
+        if($max > 0) {
+            $maxId = $gallery[$max-1]['id'];
+            return $maxId + 1;
+        } else {
+            return 1;
         }
     }
 }
