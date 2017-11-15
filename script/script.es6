@@ -1,7 +1,7 @@
 import {$} from './lib/jquery.es6';
 
 $(document).ready(() => {
-	//pageLoad();
+	pageLoad();
 	formSubmit($('#upload-form'));
 });
 

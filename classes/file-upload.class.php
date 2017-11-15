@@ -69,13 +69,13 @@ class fileUpload {
 
             if($data['success'] == true) {
 
-                $data = Array (
+                $insertData = Array (
                     "title" => $postData['title'],
                     "description" => $postData['description'],
                     "url" => $this->uploadPath
                 );
 
-                $this->db->insert ('gallery', $data);
+                $this->db->insert ('gallery', $insertData);
             }
         }
 
