@@ -1,6 +1,5 @@
 <?php
 
-//include_once ('json-creator.class.php');
 require_once ('vendor/MysqliDb.php');
 
 class fileUpload {
@@ -17,8 +16,6 @@ class fileUpload {
     public $data = [];
     public $uploadPath = '';
 
-    //private $jsonCreator;
-
     private $db;
 
     public function __construct($postData, $postImage) {
@@ -28,7 +25,6 @@ class fileUpload {
 
     private function init($postData, $postImage) {
 
-        //$this->jsonCreator = new jsonCreator();
         $this->db = new MysqliDb ('localhost', 'root', '', 'upload_image');
 
         $this->fileName = $postImage['image']['name'];
@@ -73,11 +69,6 @@ class fileUpload {
 
             if($data['success'] == true) {
 
-                //$jsonData['id'] = $this->checkId();
-                //$jsonData['title'] = $postData['title'];
-                //$jsonData['description'] = $postData['description'];
-                //$jsonData['url'] = $this->uploadPath;  
-
                 $data = Array (
                     "title" => $postData['title'],
                     "description" => $postData['description'],
@@ -85,8 +76,6 @@ class fileUpload {
                 );
 
                 $this->db->insert ('gallery', $data);
-
-                //$this->jsonCreator->init($jsonData);
             }
         }
 
@@ -119,7 +108,7 @@ class fileUpload {
     private function checkId() {
         $gallery = $this->db->get ("gallery");
         $max = $this->db->count;
-        
+
         if($max > 0) {
             $maxId = $gallery[$max-1]['id'];
             return $maxId + 1;
