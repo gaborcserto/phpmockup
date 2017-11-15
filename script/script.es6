@@ -5,14 +5,14 @@ $(document).ready(() => {
 	formSubmit($('#upload-form'));
 });
 
-/*function pageLoad() {
+function pageLoad() {
 	let formLink = '.form-link';
 	let imageLink = '.images-link';
 	let main = $('main');
 
-	$(formLink).addClass('active');
+	/*$(formLink).addClass('active');
 	$(imageLink).removeClass('active');
-	main.html(main.load('form.tpl'));
+	main.html(main.load('form.tpl'));*/
 
 	$('#form').on('click',() =>{
 		$(formLink).addClass('active');
@@ -24,7 +24,7 @@ $(document).ready(() => {
 		$(formLink).removeClass('active');
 		main.html(main.load('images.tpl'));
 	});
-}*/
+}
 
 function formSubmit (formId) {
 
