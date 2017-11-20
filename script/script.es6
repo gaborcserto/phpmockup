@@ -10,16 +10,13 @@ function pageLoad() {
 	let imageLink = '.images-link';
 	let main = $('main');
 
-	/*$(formLink).addClass('active');
-	$(imageLink).removeClass('active');
-	main.html(main.load('form.tpl'));*/
-
 	$('#form').on('click',() =>{
 		$(formLink).addClass('active');
 		$(imageLink).removeClass('active');
 		main.html(main.load('form.tpl'));
 	});
 	$('#images').on('click',() =>{
+		loadGallery();
 		$(imageLink).addClass('active');
 		$(formLink).removeClass('active');
 		main.html(main.load('images.tpl'));
@@ -88,5 +85,28 @@ function formSubmit (formId) {
 			})
 		});
 		return false;
+	});
+}
+
+function loadGallery (){
+	let json = 'result.json.php';
+	let galleryItems = [];
+
+	$.getJSON( json, () => {}).done( (jsonData) => {
+		$.each( jsonData.data, ( i, item ) => {
+			galleryItems.push(
+				'<div class="col-sm-3">' +
+					'<div class="card">' +
+						'<img class="card-img-top" src="' + item.url + '" alt="Card image cap">' +
+						'<div class="card-body">' +
+							'<h4 class="card-title">' + item.title + '</h4>' +
+							'<p class="card-text">' + item.description + '</p>' +
+						'</div>' +
+					'</div>' +
+				'</div>'
+			);
+		});
+		// eslint-disable-next-line
+		$('.row').html( galleryItems.join(""));
 	});
 }

@@ -1,3 +1,15 @@
 .gallery {
 	padding: 15px;
+
+	.no-images {
+		color: $base-gray-2;
+		font-size: 50px;
+		margin: 100px 0;
+		text-transform: uppercase;
+		width: 100%;
+	}
+
+	.card {
+		margin: 15px 0;
+	}
 }

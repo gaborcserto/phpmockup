@@ -3059,6 +3059,10 @@ section {
   margin-bottom: 40px;
 }
 
+.nav-link {
+  cursor: pointer;
+}
+
 .file-upload__wrapper {
   background-color: #f8f8f8;
   border-radius: .25rem;
@@ -3120,6 +3124,18 @@ section {
 
 .gallery {
   padding: 15px;
+}
+
+.gallery .no-images {
+  color: #999;
+  font-size: 50px;
+  margin: 100px 0;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.gallery .card {
+  margin: 15px 0;
 }
 
 /*# sourceMappingURL=style.css.map */
